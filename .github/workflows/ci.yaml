@@ -1,0 +1,34 @@
+name: Build and Push Ansible Execution Environment
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Ansible Builder
+        run: pip install ansible-builder
+
+      - name: Login to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push Execution Environment
+        run: |
+          ansible-builder build -t ghcr.io/${{ github.repository_owner }}/ansible-runner:latest
+          docker push ghcr.io/${{ github.repository_owner }}/ansible-runner:latest

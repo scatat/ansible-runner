@@ -1,0 +1,6 @@
+# System packages required
+git
+curl
+openssh-clients
+rsync
+iproute

@@ -1,0 +1,15 @@
+---
+version: 1
+build_arg_defaults:
+  EE_BASE_IMAGE: 'quay.io/ansible/ansible-runner:latest'
+
+dependencies:
+  galaxy: requirements.yml
+  python: requirements.txt
+  system: bindep.txt
+
+additional_build_steps:
+  prepend:
+    - RUN dnf -y update && dnf clean all
+  append:
+    - RUN echo "Additional customization steps here"
