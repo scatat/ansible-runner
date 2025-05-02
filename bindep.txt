@@ -4,3 +4,4 @@ curl
 openssh-clients
 rsync
 iproute
+iptables-nft
