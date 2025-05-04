@@ -5,3 +5,4 @@ openssh-clients
 rsync
 iproute
 iptables-nft
+procps-ng
